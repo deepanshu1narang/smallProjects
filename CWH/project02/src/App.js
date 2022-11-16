@@ -2,7 +2,7 @@ import './App.css';
 import React, { Component } from 'react'
 import Navbar from './components/Navbar';
 import NewsComponent from './components/NewsComponent';
-import About from './components/About';
+import Notes from './components/Notes';
 import {
   Routes,
   Route,
@@ -23,7 +23,7 @@ export default class App extends Component {
     return (
       <div className='App'>
         <Navbar />
-        <About />
+        <Notes />
         {console.log(this.apiKey)}
           <div className='container my-3'>
             <Routes>
@@ -34,6 +34,7 @@ export default class App extends Component {
             <Route exact path="/sports" element={<NewsComponent key="sports" pageSize={20} apiKey={this.apiKey} country="in" category="sports" />} />
             <Route exact path="/technology" element={<NewsComponent key="technology" pageSize={20} apiKey={this.apiKey} country="in" category="technology" />} />
             <Route exact path="/entertainment" element={<NewsComponent key="entertainment" pageSize={20} apiKey={this.apiKey} country="in" category="entertainment" />} />
+            <Route exact path="/notes" element={<Notes />} />
           </Routes>
         </div>
 

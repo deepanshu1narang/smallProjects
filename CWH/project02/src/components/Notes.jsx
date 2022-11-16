@@ -2,8 +2,10 @@ import React, { Component } from 'react'
 import About from './About';
 
 export default class Notes extends Component {
+  
+  disclaimer = "Although Function based components are gonna be used more but one should have class based component understanding too";
+
   render() {
-    disclaimer = "Although Function based components are gonna be used more but one should have class based component understanding too";
     return (
       <div className='container'>
         <About />

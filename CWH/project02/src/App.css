@@ -71,3 +71,8 @@
   font-weight: bolder;
   font-size: x-large; 
 }
+
+.right-corner01{
+  position : relative;
+  left : 37vw;
+}
