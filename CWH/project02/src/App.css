@@ -54,7 +54,7 @@
 }
 
 #pageNo #nextB{
-  margin-left: 330px;
+  margin-left: 417px;
 }
 
 .card-text p{
@@ -75,4 +75,8 @@
 .right-corner01{
   position : relative;
   left : 37vw;
+}
+
+.deleteItLater{
+  background-color: brown;
 }
