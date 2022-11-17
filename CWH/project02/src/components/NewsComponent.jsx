@@ -39,9 +39,13 @@ export default class NewsComponent extends Component {
 
   
   updateNews(){
+    this.props.setProgress(30);
     const url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.props.apiKey}&page=${this.state.page}&pageSize=${this.props.pageSize}`;
     fetch(url)
-    .then(response => response.json())
+    .then(response => {
+      // this.props.setProgress(50);
+      return response.json();
+    })
     .then(data => {
       if(data.status === 'ok'){
         let articles = data.articles;
@@ -56,7 +60,8 @@ export default class NewsComponent extends Component {
         console.log("some error is there");
       }
     })
-    .catch(error => console.log(error, "We might have reached the limits."));
+    .catch(error => console.log(error));
+    this.props.setProgress(100);
   }
 
   componentDidMount(){
@@ -69,11 +74,14 @@ export default class NewsComponent extends Component {
   
 
   fetchMoreData = () => {
+    this.props.setProgress(60);
     this.setState({page : this.state.page + 1});
     // this.updateNews();
     const url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.props.apiKey}&page=${this.state.page}&pageSize=${this.props.pageSize}`;
     fetch(url)
-    .then(response => response.json())
+    .then(response => {
+      return response.json();
+    })
     .then(data => {
       if(data.status === 'ok'){
         let articles = data.articles;
@@ -83,12 +91,14 @@ export default class NewsComponent extends Component {
           totalPages : Math.ceil(data.totalResults/this.props.pageSize),
           loading : false
         });
+        // this.props.setProgress(80);
       }
       else{
         console.log("some error is there");
       }
     })
     .catch(error => console.log(error, error.message));
+    this.props.setProgress(100);
   }
 
   // why updateNews function? clear the comments and then look at a cleaner code --- or if the commented code is cleared someday then just write the code of updateNews() inside the block in place of this.updateNews() 
