@@ -1,29 +1,29 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
+
 import NewsItem from './NewsItem';
 import Spinner from './Spinner';
 import PropTypes from 'prop-types';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 export default function NewsComponent(props){
-
-  let capitalizeFirstLetter = (string) =>{
-    return string.charAt(0).toUpperCase() + string.slice(1);
-  }
-
+  
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
   const [totalResults, setTotalResults] = useState(0);
+
+  const capitalizeFirstLetter = (string) =>{
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
   
-  document.title = `${capitalizeFirstLetter(props.category)} - NewsMonkey`;
-  
-  function updateNews(){
+  const updateNews = () => {
     const url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${props.apiKey}&page=${page}&pageSize=${props.pageSize}`;
     fetch(url)
     .then(response => response.json())
     .then(data => {
       if(data.status === 'ok'){
+        setLoading(true);
         let articles = data.articles;
         setArticles(articles);
         setTotalResults(data.totalResults);
@@ -33,34 +33,33 @@ export default function NewsComponent(props){
         console.log("some error is there");
       }
     })
-    .catch(error => console.log(error, "We might have reached the limits."));
+    .catch(error => console.log(error));
   }
 
-  useEffect(() => {
+  useEffect(function(){
+    document.title = `${capitalizeFirstLetter(props.category)} - NewsMonkey`;
     updateNews();
-  }, []);  
+  }, [page]);
 
   const fetchMoreData = () => {
-    // this.updateNews();
-    const url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${props.apiKey}&page=${page}&pageSize=${props.pageSize}`;
-    fetch(url)
-    .then(response => response.json())
-    .then(data => {
-      if(data.status === 'ok'){
-        let articles = data.articles;
-        setPage(page+1);
-        setArticles(articles.concat(articles));
-        setTotalResults(data.totalResults);
-        setLoading(false);
-      }
-      else{
-        console.log("some error is there");
-      }
-    })
-    .catch(error => console.log(error, error.message));
+    setPage(page+1);
+    // const url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${props.apiKey}&page=${page}&pageSize=${props.pageSize}`;
+    // fetch(url)
+    // .then(response => response.json())
+    // .then(data => {
+    //   if(data.status === 'ok'){
+    //     let articles = data.articles;
+    //     setArticles(articles.concat(articles));
+    //     setTotalResults(data.totalResults);
+    //     // setLoading(false);
+    //   }
+    //   else{
+    //     console.log("some error is there");
+    //   }
+    // })
+    // .catch(error => console.log(error, error.message));
   }
 
-  // why updateNews function? clear the comments and then look at a cleaner code --- or if the commented code is cleared someday then just write the code of updateNews() inside the block in place of this.updateNews() 
 
   const randomWriter= () => {
     const writers = ["Naruto Uzumaki", "unknown", 'Sasuke Uchiha', "Madara Uchiha", "Itachi Uchiha", "Hinata Hyuga", "Negi Hyuga", "Shikamaru Nara", "Pain", "Nagato Uzumaki", "Jiraya", "Konan", "Byakuya Kuchiki", "Ichigo Kurosaki", "Uryu Ishida", "Sakura Haruno", "Sai", "Ino Yamanaka", "Choji Akimichi", "Minato Namikaze", "Kushina Namikaze"];
@@ -70,7 +69,7 @@ export default function NewsComponent(props){
 
   return (
     <>
-      <h1 className='text-center'>NewsMonkey - Top { props.category !== 'general' && this.capitalizeFirstLetter(props.category) } Headlines</h1>
+      <h1 className='text-center'>NewsMonkey - Top { props.category !== 'general' && capitalizeFirstLetter(props.category) } Headlines</h1>
 
       <InfiniteScroll
         dataLength={articles.length}
@@ -81,13 +80,12 @@ export default function NewsComponent(props){
         <div className='container my-3'>
           <div className='row'>
             {
-              this.state.articles !== [] && this.state.articles.map((e, index) => {
+              articles.map((e, index) => {
                 return (
                   <div className='col-md-4 my-3' key={index}>
                     <NewsItem 
                       title={e.title ? (e.title.length > 40 ? e.title.slice(0,40) + "..." : e.title) : ""} 
-                      description={e.description ? (e.description.length > 80 ? e.description.slice(0,80) + "..." : e.description) : e.title.slice(0,80) + "..."} 
-                      
+                      description={e.description ? (e.description.length > 80 ? e.description.slice(0,80) + "..." : e.description) : e.title.slice(0,80) + "..."}                      
                       imageUrl={e.urlToImage ? e.urlToImage : "https://media.istockphoto.com/id/1182477852/photo/breaking-news-world-news-with-map-backgorund.jpg?s=612x612&w=0&k=20&c=SQfmzF39HZJ_AqFGosVGKT9iGOdtS7ddhfj0EUl0Tkc="} 
                       newsUrl={e.url} author={!e.author ? randomWriter() : e.author} 
                       date={`${new Date(e.publishedAt.slice(0,10).toString()).toDateString()}, ${new Date("01-01-2000 " + e.publishedAt.slice(11,19).toString()).toLocaleTimeString()}` } 
