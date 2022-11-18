@@ -17,7 +17,7 @@ export default class NewsItem extends Component {
           <div className="card-body">
             <h5 className="card-title">{this.props.title}</h5>
             <p className="card-text" style={{marginBottom:"8px", height : "4.5rem"}}>{this.props.description}</p>
-            <p class="card-text"><small className="text-muted">Published by {this.props.author} at {this.props.date}</small></p>
+            <p className="card-text"><small className="text-muted">Published by {this.props.author} at {this.props.date}</small></p>
             <a href= {this.props.newsUrl} rel="noreferrer" target="_blank" className="btn btn-primary">
               Read More
             </a>

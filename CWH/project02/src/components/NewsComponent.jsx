@@ -24,15 +24,11 @@ export default class NewsComponent extends Component {
 
   constructor(props){
     super(props);
-    // console.log("I am a constructor from News Component");
-    // states are always set up in constructors
     this.state = {
       articles : [],
       loading : false,
       page : 1,
-      status : "",
       totalResults : 0
-      // totalResults : 0.... even if we don't make a state here we can directly make the state in the setState only 
     }
     document.title = `${this.capitalizeFirstLetter(this.props.category)} - NewsMonkey`;
   }
@@ -52,7 +48,6 @@ export default class NewsComponent extends Component {
         this.setState({
           articles : articles,
           totalResults : data.totalResults,
-          totalPages : Math.ceil(data.totalResults/this.props.pageSize),
           loading : false
         });
       }
@@ -100,8 +95,7 @@ export default class NewsComponent extends Component {
     .catch(error => console.log(error, error.message));
     this.props.setProgress(100);
   }
-
-  // why updateNews function? clear the comments and then look at a cleaner code --- or if the commented code is cleared someday then just write the code of updateNews() inside the block in place of this.updateNews() 
+ 
 
   randomWriter= () => {
     const writers = ["Naruto Uzumaki", "unknown", 'Sasuke Uchiha', "Madara Uchiha", "Itachi Uchiha", "Hinata Hyuga", "Negi Hyuga", "Shikamaru Nara", "Pain", "Nagato Uzumaki", "Jiraya", "Konan", "Byakuya Kuchiki", "Ichigo Kurosaki", "Uryu Ishida", "Sakura Haruno", "Sai", "Ino Yamanaka", "Choji Akimichi", "Minato Namikaze", "Kushina Namikaze"];
