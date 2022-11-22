@@ -12,7 +12,7 @@ export default function NewsItem(props){
           <div className="card-body">
             <h5 className="card-title">{props.title}</h5>
             <p className="card-text" style={{marginBottom:"8px", height : "4.5rem"}}>{props.description}</p>
-            <p class="card-text"><small className="text-muted">Published by {props.author} at {props.date}</small></p>
+            <p className="card-text"><small className="text-muted">Published by {props.author} at {props.date}</small></p>
             <a href= {props.newsUrl} rel="noreferrer" target="_blank" className="btn btn-primary">
               Read More
             </a>

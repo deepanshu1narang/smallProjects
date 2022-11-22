@@ -18,14 +18,14 @@ export default function NewsComponent(props){
   }
   
   const updateNews = () => {
+    props.showProgress(30);
     const url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${props.apiKey}&page=${page}&pageSize=${props.pageSize}`;
     fetch(url)
     .then(response => response.json())
     .then(data => {
       if(data.status === 'ok'){
-        setLoading(true);
-        let articles = data.articles;
-        setArticles(articles);
+        // setLoading(true);
+        setArticles(articles.concat(data.articles));
         setTotalResults(data.totalResults);
         setLoading(false);
       }
@@ -34,6 +34,7 @@ export default function NewsComponent(props){
       }
     })
     .catch(error => console.log(error));
+    props.showProgress(100);
   }
 
   useEffect(function(){
@@ -42,14 +43,16 @@ export default function NewsComponent(props){
   }, [page]);
 
   const fetchMoreData = () => {
+    props.showProgress(10);
     setPage(page+1);
+    // setLoading(false);
     // const url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${props.apiKey}&page=${page}&pageSize=${props.pageSize}`;
     // fetch(url)
     // .then(response => response.json())
     // .then(data => {
     //   if(data.status === 'ok'){
-    //     let articles = data.articles;
-    //     setArticles(articles.concat(articles));
+    //  // let articles = data.articles;
+    //     setArticles(articles.concat(data.articles));
     //     setTotalResults(data.totalResults);
     //     // setLoading(false);
     //   }
@@ -74,7 +77,7 @@ export default function NewsComponent(props){
       <InfiniteScroll
         dataLength={articles.length}
         next={fetchMoreData}
-        hasMore={articles.length > totalResults ? false : true}
+        hasMore={articles.length < totalResults ? true : false}
         loader={<Spinner />}
         >
         <div className='container my-3'>
