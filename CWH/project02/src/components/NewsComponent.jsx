@@ -45,22 +45,6 @@ export default function NewsComponent(props){
   const fetchMoreData = () => {
     props.showProgress(10);
     setPage(page+1);
-    // setLoading(false);
-    // const url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${props.apiKey}&page=${page}&pageSize=${props.pageSize}`;
-    // fetch(url)
-    // .then(response => response.json())
-    // .then(data => {
-    //   if(data.status === 'ok'){
-    //  // let articles = data.articles;
-    //     setArticles(articles.concat(data.articles));
-    //     setTotalResults(data.totalResults);
-    //     // setLoading(false);
-    //   }
-    //   else{
-    //     console.log("some error is there");
-    //   }
-    // })
-    // .catch(error => console.log(error, error.message));
   }
 
 
@@ -72,7 +56,7 @@ export default function NewsComponent(props){
 
   return (
     <>
-      <h1 className='text-center'>NewsMonkey - Top { props.category !== 'general' && capitalizeFirstLetter(props.category) } Headlines</h1>
+      <h1 id="topHeadlines01" className='text-center'>NewsMonkey - Top { props.category !== 'general' && capitalizeFirstLetter(props.category) } Headlines</h1>
 
       <InfiniteScroll
         dataLength={articles.length}

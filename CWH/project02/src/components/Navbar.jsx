@@ -7,7 +7,7 @@ export default class Navbar extends Component {
   render() {
     return (
       <div style={{margin:"-5px -5px 1px -5px"}}>
-        <nav className="navbar navbar-expand-lg bg-light">
+        <nav className="navbar navbar-expand-lg bg-light fixed-top">
           <div className="container-fluid">
             <p id="brandName" style={{display:"inline", marginBottom:"0px", position:"relative", bottom:"3px"}} className="navbar-brand">
               NewsMonkey
@@ -35,7 +35,6 @@ export default class Navbar extends Component {
                 <li className="nav-item"><Link className="nav-link active" aria-current="page" to="/sports">Sports</Link></li>
                 <li className="nav-item"><Link className="nav-link active" aria-current="page" to="/technology">Technology</Link></li>
                 <li className="nav-item"><Link className="nav-link active" aria-current="page" to="/entertainment">Entertainment</Link></li>
-                <li className="nav-item right-corner01"><Link className="nav-link active" aria-current="page" to="/notes">Notes</Link></li>
               </ul>
             </div>
           </div>
