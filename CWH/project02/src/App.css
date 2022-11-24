@@ -44,17 +44,20 @@
 } */
 
 #pageNo #normalSpan{
-  text-align: center;
+  position: absolute;
+  left:40%;
   /* border: 1px solid black; */
   font-size: 1.25rem;
   width : auto;
   height : 2rem;
-  margin-left : 270px;
+  /* margin-left : 27px; */
   padding: 0.5px;
 }
 
 #pageNo #nextB{
-  margin-left: 417px;
+  position: relative;
+  left : 1067%;
+  /* margin-left: 417px; */
 }
 
 .card-text p{
