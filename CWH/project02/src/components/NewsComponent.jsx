@@ -94,6 +94,16 @@ export default class NewsComponent extends Component {
     return writers[ind];
   }
 
+  pageNavigator = (e) => {
+    const toPage = Number(e.target.innerText);
+    if(this.state.page === toPage)
+      e.target.disabled = true;
+    else{
+      this.setState({page : toPage, loading :true});
+      this.updateNews();
+    }
+  }
+
 
 
   render() {
@@ -123,7 +133,7 @@ export default class NewsComponent extends Component {
 
 
             <span id="normalSpan"> 
-              <Pagination id="pageNumber" page={this.state.page} count={this.state.totalPages} hideFirstButton hideNextButton hidePrevButton hideLastButton color='primary' />
+              <Pagination id="pageNumber" page={this.state.page} count={this.state.totalPages} hideFirstButton hideNextButton hidePrevButton hideLastButton color='primary' onClick={this.pageNavigator} />
             </span>
 
             <div className="btn-group me-2" role="group" aria-label="Second group">
